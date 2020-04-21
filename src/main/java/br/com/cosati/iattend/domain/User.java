@@ -1,11 +1,20 @@
 package br.com.cosati.iattend.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import br.com.cosati.iattend.domain.enums.Graduation;
 import br.com.cosati.iattend.domain.enums.Profile;
@@ -14,6 +23,8 @@ import br.com.cosati.iattend.domain.enums.Profile;
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
 	private String lastName;
@@ -23,15 +34,20 @@ public class User implements Serializable {
 
 	private String password;
 	
-	private String address;
+	@ElementCollection
+	@CollectionTable(name="PHONE")
 	private Set<String> phones = new HashSet<>();
 	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="PROFILES")
 	private Set<Integer> profiles = new HashSet<>();
+	
+	@ManyToMany(mappedBy="users")
+	private List<Session> sessions = new ArrayList<>(); 
 	
 	public User() {}
 
-	public User(Integer id, String name, String lastName, String email, String cpf, Graduation graduation, String password,
-			String address) {
+	public User(Integer id, String name, String lastName, String email, String cpf, Graduation graduation, String password) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -40,7 +56,7 @@ public class User implements Serializable {
 		this.cpf = cpf;
 		this.graduation = (graduation == null) ? null : graduation.getCod();
 		this.password = password;
-		this.address = address;		
+		//this.address = address;		
 		//TODO add Profile
 	}
 
@@ -99,14 +115,6 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
 	
 	public Set<Profile> getProfiles() {
 		return this.profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
@@ -122,6 +130,14 @@ public class User implements Serializable {
 
 	public void addProfile(Profile profile) {
 		this.profiles.add(profile.getCod());
+	}
+
+	public List<Session> getSessions() {
+		return sessions;
+	}
+
+	public void setSessions(List<Session> sessions) {
+		this.sessions = sessions;
 	}
 
 	@Override
