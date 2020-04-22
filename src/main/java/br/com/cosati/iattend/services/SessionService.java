@@ -18,7 +18,7 @@ public class SessionService {
 	private SessionRepository repo;
 	
 	public Session find(Integer id) {
-		Session obj = repo.getOne(id);
+		Session obj = repo.findById(id).get();
 		//TODO Not found Exception
 		return obj;
 	}

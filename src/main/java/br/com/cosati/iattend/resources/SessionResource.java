@@ -28,9 +28,10 @@ public class SessionResource {
 	private UserService userService;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Session> find(@PathVariable Integer id) {
+	public ResponseEntity<SessionDTO> find(@PathVariable Integer id) {
 		Session obj = service.find(id);
-		return ResponseEntity.ok().body(obj);
+		SessionDTO objDto = new SessionDTO(obj);
+		return ResponseEntity.ok().body(objDto);
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
