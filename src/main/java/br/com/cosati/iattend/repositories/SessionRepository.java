@@ -1,5 +1,6 @@
 package br.com.cosati.iattend.repositories;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -21,5 +22,8 @@ public interface SessionRepository extends JpaRepository<Session, Integer> {
 	@Transactional(readOnly = true)
 	//@Query("SELECT DINSTINCT obj FROM Session obj INNER JOIN obj.users u WHERE u = :user")
 	Page<Session> findDistinctByUsers(@Param("user") User user, Pageable pageRequest);
+	
+	@Transactional(readOnly = true)
+	Page<Session> findAllByDateBetween(Date d1, Date d2, Pageable pageRequest);
 	
 }

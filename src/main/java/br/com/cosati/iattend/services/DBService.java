@@ -16,6 +16,7 @@ import br.com.cosati.iattend.repositories.CityRepository;
 import br.com.cosati.iattend.repositories.ProvinceRepository;
 import br.com.cosati.iattend.repositories.SessionRepository;
 import br.com.cosati.iattend.repositories.UserRepository;
+import br.com.cosati.iattend.util.iAttendUtil;
 
 @Service
 public class DBService {
@@ -57,10 +58,15 @@ public class DBService {
 		User u2 = new User(null, "Ricardo", "Soares", "rbushido@hotmail.com", "74398634029", Graduation.BLACK, "123");
 		User u3 = new User(null, "Layon", "Onofre", "layon@hotmail.com", "74398634029", Graduation.BROWN, "123");
 		
-		Session s1 = new Session(null, new Date(), 90, "Kata");
-		Session s2 = new Session(null, new Date(), 120, "Kumite");
-		Session s3 = new Session(null, new Date(), 90, "Kihon");
-		Session s4 = new Session(null, new Date(), 60, "Kata");
+		Date d1 = iAttendUtil.formatDate("22/05/2019");
+		Date d2 = iAttendUtil.formatDate("22/05/2020");
+		Date d3 = iAttendUtil.formatDate("31/12/2019");
+		Date d4 = iAttendUtil.formatDate("22/05/1991");
+		
+		Session s1 = new Session(null, d4, 90, "Kata");
+		Session s2 = new Session(null, d1, 120, "Kumite");
+		Session s3 = new Session(null, d3, 90, "Kihon");
+		Session s4 = new Session(null, d2, 60, "Kata");
 		
 		u1.getSessions().addAll(Arrays.asList(s1, s2, s4));
 		u2.getSessions().addAll(Arrays.asList(s1, s2, s3, s4));
