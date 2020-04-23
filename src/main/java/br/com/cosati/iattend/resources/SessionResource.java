@@ -37,19 +37,19 @@ public class SessionResource {
 	}
 
 	@RequestMapping(value = "/dates/", method = RequestMethod.GET)
-	public ResponseEntity<Page<SessionDTO>> findSessions(
+	public ResponseEntity<Page<SessionDTO>> findSessionsByDate(
 			@RequestParam(value = "start", defaultValue = "") @DateTimeFormat(pattern = "yyyyMMdd") Date start,
-			@RequestParam(value = "end", defaultValue = "") @DateTimeFormat(pattern = "yyyyMMdd") Date end,
+			@RequestParam(value = "end", defaultValue = "", required=false) @DateTimeFormat(pattern = "yyyyMMdd") Date end,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "date") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) throws DataIntegrityException {
 		//TODO ConversionFailedException
-		Page<Session> list = service.searchInterval(start, end, page, linesPerPage, orderBy, direction);
+		Page<Session> list = service.findByDateBetween(start, end, page, linesPerPage, orderBy, direction);
 		Page<SessionDTO> listDto = list.map(obj -> new SessionDTO(obj));
 		return ResponseEntity.ok().body(listDto);
 	}
-
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<SessionDTO>> findPage(
 			@RequestParam(value = "user_id", defaultValue = "") Integer user_id,

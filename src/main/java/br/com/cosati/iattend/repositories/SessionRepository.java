@@ -26,4 +26,7 @@ public interface SessionRepository extends JpaRepository<Session, Integer> {
 	@Transactional(readOnly = true)
 	Page<Session> findAllByDateBetween(Date d1, Date d2, Pageable pageRequest);
 	
+	@Transactional(readOnly = true)
+	Page<Session> findAllByDate(Date date, Pageable pageRequest);
+	
 }
