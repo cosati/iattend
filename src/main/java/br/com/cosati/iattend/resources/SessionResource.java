@@ -17,7 +17,7 @@ import br.com.cosati.iattend.domain.User;
 import br.com.cosati.iattend.dto.SessionDTO;
 import br.com.cosati.iattend.services.SessionService;
 import br.com.cosati.iattend.services.UserService;
-import br.com.cosati.iattend.services.exceptions.DataIntegrityException;
+import br.com.cosati.iattend.services.exceptions.ConversionFailedException;
 
 @RestController
 @RequestMapping(value = "/sessions")
@@ -43,7 +43,7 @@ public class SessionResource {
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "date") String orderBy,
-			@RequestParam(value = "direction", defaultValue = "ASC") String direction) throws DataIntegrityException {
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction) throws ConversionFailedException {
 		//TODO ConversionFailedException
 		Page<Session> list = service.findByDateBetween(start, end, page, linesPerPage, orderBy, direction);
 		Page<SessionDTO> listDto = list.map(obj -> new SessionDTO(obj));
@@ -57,7 +57,6 @@ public class SessionResource {
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "date") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-		// Integer id = Integer.parseInt(user_id);
 		User user = userService.findById(user_id).get();
 		Page<Session> list = service.searchSession(user, page, linesPerPage, orderBy, direction);
 		Page<SessionDTO> listDto = list.map(obj -> new SessionDTO(obj));
