@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,6 +51,7 @@ public class SessionResource {
 		return ResponseEntity.ok().body(listDto);
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<SessionDTO>> findPage(
 			@RequestParam(value = "user_id", defaultValue = "") Integer user_id,
@@ -57,7 +59,7 @@ public class SessionResource {
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "date") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-		User user = userService.findById(user_id).get();
+		User user = userService.findById(user_id);
 		Page<Session> list = service.searchSession(user, page, linesPerPage, orderBy, direction);
 		Page<SessionDTO> listDto = list.map(obj -> new SessionDTO(obj));
 		return ResponseEntity.ok().body(listDto);

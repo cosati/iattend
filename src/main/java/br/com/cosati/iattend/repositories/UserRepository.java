@@ -8,6 +8,8 @@ import br.com.cosati.iattend.domain.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>{
+	
 	@Transactional(readOnly=true)
 	User findByEmail(String email);
+	
 }

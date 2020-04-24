@@ -16,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.cosati.iattend.domain.enums.Graduation;
 import br.com.cosati.iattend.domain.enums.Profile;
 
@@ -32,6 +34,7 @@ public class User implements Serializable {
 	private String cpf;
 	private Integer graduation;
 
+	@JsonIgnore
 	private String password;
 	
 	@ElementCollection
@@ -56,6 +59,7 @@ public class User implements Serializable {
 		this.cpf = cpf;
 		this.graduation = (graduation == null) ? null : graduation.getCod();
 		this.password = password;
+		addProfile(Profile.STUDENT);
 		//this.address = address;		
 		//TODO add Profile
 	}

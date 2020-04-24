@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.cosati.iattend.domain.City;
@@ -33,6 +34,9 @@ public class DBService {
 	@Autowired
 	private SessionRepository sessionRepository;
 	
+	@Autowired
+	private BCryptPasswordEncoder pe;
+	
 	public void instantiateTestDatabase () throws ParseException  {
 		
 		Province p1 = new Province(null, "Paraná");
@@ -54,9 +58,9 @@ public class DBService {
 		provinceRepository.saveAll(Arrays.asList(p1, p2, p3, p4));
 		cityRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5));
 		
-		User u1 = new User(null, "Alexandre", "Cosati", "cosati@hotmail.com", "74398634029", Graduation.BLACK, "123");
-		User u2 = new User(null, "Ricardo", "Soares", "rbushido@hotmail.com", "74398634029", Graduation.BLACK, "123");
-		User u3 = new User(null, "Layon", "Onofre", "layon@hotmail.com", "74398634029", Graduation.BROWN, "123");
+		User u1 = new User(null, "Alexandre", "Cosati", "cosati@hotmail.com", "74398634029", Graduation.BLACK, pe.encode("123"));
+		User u2 = new User(null, "Ricardo", "Soares", "rbushido@hotmail.com", "74398634029", Graduation.BLACK, pe.encode("123"));
+		User u3 = new User(null, "Layon", "Onofre", "layon@hotmail.com", "74398634029", Graduation.BROWN, pe.encode("123"));
 		
 		Date d1 = iAttendUtil.formatDate("22/05/2019");
 		Date d2 = iAttendUtil.formatDate("22/05/2020");
