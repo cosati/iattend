@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,6 +29,11 @@ public class Session implements Serializable {
 	private Date date;
 	private Integer duration;
 	private String description;
+	
+	@JsonIgnore	
+	@ManyToOne
+	@JoinColumn(name="dojo_id")
+	private Dojo dojo;
 	
 	@JsonIgnore
 	@ManyToMany
