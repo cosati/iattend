@@ -35,12 +35,12 @@ public class SessionService {
 		return repo.findAll(pageRequest);
 	}
 	
-	public Page<Session> findByDateBetween(Date start, Date end, Integer page, Integer linesPerPage, String orderBy, String direction) {
+	public Page<Session> findByStartBetween(Date start, Date end, Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		if (end != null) {
-			return repo.findAllByDateBetween(start, end, pageRequest);
+			return repo.findAllByStartBetween(start, end, pageRequest);
 		} 
-		return repo.findAllByDate(start, pageRequest);		
+		return repo.findAllByStart(start, pageRequest);		
 	}
 	
 }

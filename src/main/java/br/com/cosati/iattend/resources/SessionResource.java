@@ -43,10 +43,10 @@ public class SessionResource {
 			@RequestParam(value = "end", defaultValue = "", required=false) @DateTimeFormat(pattern = "yyyyMMdd") Date end,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
-			@RequestParam(value = "orderBy", defaultValue = "date") String orderBy,
+			@RequestParam(value = "orderBy", defaultValue = "start") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) throws ConversionFailedException {
 		//TODO ConversionFailedException
-		Page<Session> list = service.findByDateBetween(start, end, page, linesPerPage, orderBy, direction);
+		Page<Session> list = service.findByStartBetween(start, end, page, linesPerPage, orderBy, direction);
 		Page<SessionDTO> listDto = list.map(obj -> new SessionDTO(obj));
 		return ResponseEntity.ok().body(listDto);
 	}
@@ -57,7 +57,7 @@ public class SessionResource {
 			@RequestParam(value = "user_id", defaultValue = "") Integer user_id,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
-			@RequestParam(value = "orderBy", defaultValue = "date") String orderBy,
+			@RequestParam(value = "orderBy", defaultValue = "start") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		User user = userService.findById(user_id);
 		Page<Session> list = service.searchSession(user, page, linesPerPage, orderBy, direction);

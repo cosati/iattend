@@ -26,8 +26,8 @@ public class Session implements Serializable {
 	private Integer id;
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	private Date date;
-	private Integer duration;
+	private Date start;
+	private Date end;
 	private String description;
 	
 	@JsonIgnore	
@@ -45,12 +45,13 @@ public class Session implements Serializable {
 	
 	public Session() {}
 
-	public Session(Integer id, Date date, Integer duration, String description) {
+	public Session(Integer id, Date start, Date end, String description, Dojo dojo) {
 		super();
 		this.id = id;
-		this.date = date;
-		this.duration = duration;
+		this.start = start;
+		this.end = end;
 		this.description = description;
+		this.dojo = dojo;
 	}
 
 	public Integer getId() {
@@ -59,22 +60,22 @@ public class Session implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}	
+
+	public Date getStart() {
+		return start;
 	}
 
-	public Date getDate() {
-		return date;
+	public void setStart(Date start) {
+		this.start = start;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public Date getEnd() {
+		return end;
 	}
 
-	public Integer getDuration() {
-		return duration;
-	}
-
-	public void setDuration(Integer duration) {
-		this.duration = duration;
+	public void setEnd(Date end) {
+		this.end = end;
 	}
 
 	public List<User> getUsers() {
@@ -91,6 +92,14 @@ public class Session implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Dojo getDojo() {
+		return dojo;
+	}
+
+	public void setDojo(Dojo dojo) {
+		this.dojo = dojo;
 	}
 
 	@Override

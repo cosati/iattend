@@ -9,17 +9,22 @@ public class SessionDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-	private String date;
-	private Integer duration;
-	private String description;
+	private String place;
+	private String address;
+	private String dayOfWeek;
+	private String start;
+	private String end;
+	private boolean checkedIn;
 	
 	public SessionDTO() {}
 	
 	public SessionDTO(Session session) {
 		this.id = session.getId();
-		this.date = iAttendUtil.formatDate(session.getDate());
-		this.duration = session.getDuration();
-		this.description = session.getDescription();
+		this.place = session.getDojo().getName();
+		this.address = session.getDojo().getAddress().toString();
+		this.dayOfWeek = iAttendUtil.dayOfWeek(session.getStart());
+		this.start = iAttendUtil.formatDate(session.getStart());
+		this.end = iAttendUtil.formatDate(session.getEnd());
 	}
 
 	public Integer getId() {
@@ -30,28 +35,52 @@ public class SessionDTO implements Serializable {
 		this.id = id;
 	}
 
-	public String getDate() {
-		return date;
+	public String getPlace() {
+		return place;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setPlace(String place) {
+		this.place = place;
 	}
 
-	public Integer getDuration() {
-		return duration;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setDuration(Integer duration) {
-		this.duration = duration;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDayOfWeek() {
+		return dayOfWeek;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDayOfWeek(String dayOfWeek) {
+		this.dayOfWeek = dayOfWeek;
 	}
+
+	public String getStart() {
+		return start;
+	}
+
+	public void setStart(String start) {
+		this.start = start;
+	}
+
+	public String getEnd() {
+		return end;
+	}
+
+	public void setEnd(String end) {
+		this.end = end;
+	}
+
+	public boolean isCheckedIn() {
+		return checkedIn;
+	}
+
+	public void setCheckedIn(boolean checkedIn) {
+		this.checkedIn = checkedIn;
+	}	
 	
 }

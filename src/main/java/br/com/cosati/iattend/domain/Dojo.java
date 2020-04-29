@@ -31,12 +31,11 @@ public class Dojo implements Serializable {
 	
 	public Dojo() {}
 
-	public Dojo(Integer id, String name, Date lastUse, List<Session> sessions, Address address) {
+	public Dojo(Integer id, String name, Date lastUse, Address address) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.lastUse = lastUse;
-		Sessions = sessions;
 		this.address = address;
 	}
 

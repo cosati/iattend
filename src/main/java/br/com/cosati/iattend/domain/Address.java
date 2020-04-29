@@ -38,8 +38,7 @@ public class Address implements Serializable {
 	
 	public Address() {}
 
-	public Address(Integer id, String streetAdress, String number, String complement, String district, String zipCode,
-			City city) {
+	public Address(Integer id, String streetAdress, String number, String complement, String district, String zipCode) {
 		super();
 		this.id = id;
 		this.streetAdress = streetAdress;
@@ -47,7 +46,6 @@ public class Address implements Serializable {
 		this.complement = complement;
 		this.district = district;
 		this.zipCode = zipCode;
-		this.city = city;
 	}
 
 	public Integer getId() {
@@ -104,6 +102,48 @@ public class Address implements Serializable {
 
 	public void setCity(City city) {
 		this.city = city;
+	}	
+
+	public Dojo getDojo() {
+		return dojo;
+	}
+
+	public void setDojo(Dojo dojo) {
+		this.dojo = dojo;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(streetAdress);
+		builder.append(", ");
+		builder.append(number);
+		return builder.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Address other = (Address) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }

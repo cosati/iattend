@@ -17,16 +17,15 @@ import br.com.cosati.iattend.domain.User;
 public interface SessionRepository extends JpaRepository<Session, Integer> {
 
 	@Transactional(readOnly = true)
-	public List<Session> findAllByOrderByDate();
+	public List<Session> findAllByOrderByStart();
 	
 	@Transactional(readOnly = true)
-	//@Query("SELECT DINSTINCT obj FROM Session obj INNER JOIN obj.users u WHERE u = :user")
 	Page<Session> findDistinctByUsers(@Param("user") User user, Pageable pageRequest);
 	
 	@Transactional(readOnly = true)
-	Page<Session> findAllByDateBetween(Date d1, Date d2, Pageable pageRequest);
+	Page<Session> findAllByStartBetween(Date d1, Date d2, Pageable pageRequest);
 	
 	@Transactional(readOnly = true)
-	Page<Session> findAllByDate(Date date, Pageable pageRequest);
+	Page<Session> findAllByStart(Date start, Pageable pageRequest);
 	
 }

@@ -8,12 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.cosati.iattend.domain.Address;
 import br.com.cosati.iattend.domain.City;
+import br.com.cosati.iattend.domain.Dojo;
 import br.com.cosati.iattend.domain.Province;
 import br.com.cosati.iattend.domain.Session;
 import br.com.cosati.iattend.domain.User;
 import br.com.cosati.iattend.domain.enums.Graduation;
+import br.com.cosati.iattend.repositories.AddressRepository;
 import br.com.cosati.iattend.repositories.CityRepository;
+import br.com.cosati.iattend.repositories.DojoRepository;
 import br.com.cosati.iattend.repositories.ProvinceRepository;
 import br.com.cosati.iattend.repositories.SessionRepository;
 import br.com.cosati.iattend.repositories.UserRepository;
@@ -33,6 +37,12 @@ public class DBService {
 	
 	@Autowired
 	private SessionRepository sessionRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
+	
+	@Autowired
+	private DojoRepository dojoRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder pe;
@@ -67,10 +77,15 @@ public class DBService {
 		Date d3 = iAttendUtil.formatDate("31/12/2019");
 		Date d4 = iAttendUtil.formatDate("22/05/1991");
 		
-		Session s1 = new Session(null, d4, 90, "Kata");
-		Session s2 = new Session(null, d1, 120, "Kumite");
-		Session s3 = new Session(null, d3, 90, "Kihon");
-		Session s4 = new Session(null, d2, 60, "Kata");
+		Address address = new Address(null, "Rua Francisco Ribas", "217", "", "Centro", "84015-102");		
+		Dojo dojo = new Dojo(null, "Academia Solarium", new Date(), address);
+		
+		address.setDojo(dojo);
+		
+		Session s1 = new Session(null, iAttendUtil.setTime(d1, 19, 0), iAttendUtil.setTime(d1, 20, 0), "Kata", dojo);
+		Session s2 = new Session(null, iAttendUtil.setTime(d2, 20, 0), iAttendUtil.setTime(d2, 21, 30), "Kumite", dojo);
+		Session s3 = new Session(null, iAttendUtil.setTime(d3, 19, 0), iAttendUtil.setTime(d3, 20, 00), "Kihon", dojo);
+		Session s4 = new Session(null, iAttendUtil.setTime(d4, 20, 0), iAttendUtil.setTime(d4, 21, 30), "Kata", dojo);
 		
 		u1.getSessions().addAll(Arrays.asList(s1, s2, s4));
 		u2.getSessions().addAll(Arrays.asList(s1, s2, s3, s4));
@@ -81,8 +96,11 @@ public class DBService {
 		s3.getUsers().addAll(Arrays.asList(u2, u3));
 		s4.getUsers().addAll(Arrays.asList(u1, u2, u3));
 		
+		addressRepository.save(address);
+		dojoRepository.save(dojo);
 		userRepository.saveAll(Arrays.asList(u1, u2, u3));
 		sessionRepository.saveAll(Arrays.asList(s1, s2, s3, s4));
+		
 		
 	}
 	
