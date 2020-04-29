@@ -28,4 +28,7 @@ public interface SessionRepository extends JpaRepository<Session, Integer> {
 	@Transactional(readOnly = true)
 	Page<Session> findAllByStart(Date start, Pageable pageRequest);
 	
+	@Transactional(readOnly = true)
+	Page<Session> findAllByEndGreaterThanEqualOrderByStart(Date start, Pageable pageRequest);
+	
 }

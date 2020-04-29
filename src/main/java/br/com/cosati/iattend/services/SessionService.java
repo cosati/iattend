@@ -43,4 +43,12 @@ public class SessionService {
 		return repo.findAllByStart(start, pageRequest);		
 	}
 	
+	public Page<Session> findByDateGreaterThanEqual(Date date, Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		if (date == null) {
+			date = new Date();
+		}
+		return repo.findAllByEndGreaterThanEqualOrderByStart(date, pageRequest);		
+	}
+	
 }

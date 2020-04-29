@@ -63,7 +63,18 @@ public class SessionResource {
 		Page<Session> list = service.searchSession(user, page, linesPerPage, orderBy, direction);
 		Page<SessionDTO> listDto = list.map(obj -> new SessionDTO(obj));
 		return ResponseEntity.ok().body(listDto);
-
+	}
+	
+	@RequestMapping(value = "/next/", method = RequestMethod.GET)
+	public ResponseEntity<Page<SessionDTO>> findNextSessions(
+			@RequestParam(value = "date", defaultValue = "", required=false) @DateTimeFormat(pattern = "yyyyMMdd") Date date,
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+			@RequestParam(value = "orderBy", defaultValue = "start") String orderBy,
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+		Page<Session> list = service.findByDateGreaterThanEqual(date, page, linesPerPage, orderBy, direction);
+		Page<SessionDTO> listDto = list.map(obj -> new SessionDTO(obj));
+		return ResponseEntity.ok().body(listDto);
 	}
 
 }
