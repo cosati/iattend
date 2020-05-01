@@ -72,8 +72,9 @@ public class SessionResource {
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "start") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-		Page<Session> list = service.findByDateGreaterThanEqual(date, page, linesPerPage, orderBy, direction);
-		Page<SessionDTO> listDto = list.map(obj -> new SessionDTO(obj));
+//		Page<Session> list = service.findByDateGreaterThanEqual(date, page, linesPerPage, orderBy, direction);
+//		Page<SessionDTO> listDto = list.map(obj -> new SessionDTO(obj));
+		Page<SessionDTO> listDto = service.findByDateGreaterThanEqual(date, page, linesPerPage, orderBy, direction);
 		return ResponseEntity.ok().body(listDto);
 	}
 

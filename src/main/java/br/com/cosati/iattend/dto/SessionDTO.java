@@ -3,6 +3,7 @@ package br.com.cosati.iattend.dto;
 import java.io.Serializable;
 
 import br.com.cosati.iattend.domain.Session;
+import br.com.cosati.iattend.domain.User;
 import br.com.cosati.iattend.util.iAttendUtil;
 
 public class SessionDTO implements Serializable {
@@ -25,6 +26,21 @@ public class SessionDTO implements Serializable {
 		this.dayOfWeek = iAttendUtil.dayOfWeek(session.getStart());
 		this.start = iAttendUtil.formatDate(session.getStart());
 		this.end = iAttendUtil.formatDate(session.getEnd());
+	}
+	
+	public SessionDTO(Session session, Integer userId) {
+		this.id = session.getId();
+		this.place = session.getDojo().getName();
+		this.address = session.getDojo().getAddress().toString();
+		this.dayOfWeek = iAttendUtil.dayOfWeek(session.getStart());
+		this.start = iAttendUtil.formatDate(session.getStart());
+		this.end = iAttendUtil.formatDate(session.getEnd());
+		this.checkedIn = false;
+		for (User user : session.getUsers()) {
+			if (user.getId().equals(userId)) {
+				this.checkedIn = true;
+			}
+		}
 	}
 
 	public Integer getId() {
