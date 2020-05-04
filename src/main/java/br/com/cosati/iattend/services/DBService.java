@@ -72,10 +72,10 @@ public class DBService {
 		User u2 = new User(null, "Ricardo", "Soares", "rbushido@hotmail.com", "74398634029", Graduation.BLACK, pe.encode("123"));
 		User u3 = new User(null, "Layon", "Onofre", "layon@hotmail.com", "74398634029", Graduation.BROWN, pe.encode("123"));
 		
-		Date d1 = iAttendUtil.formatDate("01/05/2020");
-		Date d2 = iAttendUtil.formatDate("01/05/2020");
+		Date d1 = iAttendUtil.formatDate("09/05/2020");
+		Date d2 = iAttendUtil.formatDate("10/05/2020");
 		Date d3 = iAttendUtil.formatDate("08/05/2020");
-		Date d4 = iAttendUtil.formatDate("30/04/2020");
+		Date d4 = iAttendUtil.formatDate("11/05/2020");
 		
 		Address address = new Address(null, "Rua Francisco Ribas", "217", "", "Centro", "84015-102");		
 		Dojo dojo = new Dojo(null, "Academia Solarium", new Date(), address);

@@ -47,7 +47,8 @@ public class SessionService {
 	}
 	
 	public Page<SessionDTO> findByDateGreaterThanEqual(Date date, Integer page, Integer linesPerPage, String orderBy, String direction) {
-		UserSS user = UserService.authenticated();
+		UserSS user = UserService.authenticated();		
+		System.out.println(user != null ? user.getId() : "not logged in");
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		if (date == null) {
 			date = new Date();
